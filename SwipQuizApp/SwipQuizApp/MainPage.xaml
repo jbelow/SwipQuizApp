@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:SwipQuizApp"
+             x:Class="SwipQuizApp.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <LayoutOptions x:Key="horzOptions"
+                           Alignment="Center" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <!-- Place new controls here -->
+        <Label x:Name="theLabel" Text="Flower Table" HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand" />
+
+        <local:SwipeContainer Swipe="OnSwiped" 
+         HorizontalOptions="Center" 
+         VerticalOptions="CenterAndExpand">
+            <Image x:Name="theImage" Source="flower_box.jpg" Aspect="AspectFit"
+                       HorizontalOptions="Center" />
+
+        </local:SwipeContainer>
+
+        <Label Text="Do you want to start the quiz?" x:Name="quizText"></Label>
+        <Button Text="Start quiz" x:Name="btnStart" Clicked="btnStartClicked"/>
+        <Button Text="True" HorizontalOptions="{StaticResource horzOptions}" x:Name="btnTrue" Clicked="btnTrueClicked"/>
+        <Button Text="False" HorizontalOptions="{StaticResource horzOptions}" x:Name="btnFalse" Clicked="btnFalseClicked"/>
+
+        <Label Text="" HorizontalOptions="{StaticResource horzOptions}" x:Name="results"></Label>
+    </StackLayout>
+
+</ContentPage>
