@@ -16,6 +16,8 @@ namespace SwipQuizApp
         IList<string> strList = new List<string>();
         IList<string> imageList = new List<string>();
         IList<QuizQuestionsViewModel> questions = new List<QuizQuestionsViewModel>();
+        private int correct;
+        private int wrong;
 
         int index;
         public MainPage()
@@ -23,65 +25,67 @@ namespace SwipQuizApp
             questions = QuizQuestionsViewModel.All;
 
             InitializeComponent();
-            strList.Add("Flower Box");
-            strList.Add("Onion Patch");
-            strList.Add("Lettuce Lattice");
-            strList.Add("Tomato Tub");
-            imageList.Add("flower_box.jpg");
-            imageList.Add("flower_box.jpg");
-            imageList.Add("flower_box.jpg");
-            imageList.Add("flower_box.jpg");
+            //strList.Add("Flower Box");
+            //strList.Add("Onion Patch");
+            //strList.Add("Lettuce Lattice");
+            //strList.Add("Tomato Tub");
+            //imageList.Add("flower_box.jpg");
+            //imageList.Add("flower_box.jpg");
+            //imageList.Add("flower_box.jpg");
+            //imageList.Add("flower_box.jpg");
             index = 0;
         }
 
-        private bool userAnswer;
-        void btnStartClicked(object sender, EventArgs args)
-        {
+        //void ResetQuiz(object sender, EventArgs e)
+        //{
 
-            quizText.Text = questions[index].Title;
+        //}
 
-        }
-
-        void btnTrueClicked(object sender, EventArgs args)
-        {
-            userAnswer = true;
-            resultsOutput(userAnswer);
-        }
-
-        void btnFalseClicked(object sender, EventArgs args)
-        {
-            userAnswer = false;
-            resultsOutput(userAnswer);
-        }
-
-        void resultsOutput(bool userAnswer)
-        {
-            //results.Text = userAnswer;
-            btnTrue.SetValue(IsVisibleProperty, false);
-
-        }
 
         void OnSwiped(object sender, SwipedEventArgs e)
         {
-            theLabel.Text = e.Direction.ToString() + " " + index;
-            if (e.Direction == SwipeDirection.Right)
+            if(index < questions.Count)
             {
-                if (index >= strList.Count - 1)
+                theLabel.Text = e.Direction.ToString() + " " + index;
+                if (e.Direction == SwipeDirection.Right)
                 {
-                    index = -1;
+                    if (questions[index].Answer == false)
+                    {
+                        correct++;
+                    }
+                    else
+                    {
+                        wrong++;
+                    }
                 }
-                theLabel.Text = strList[++index];
-                theImage.Source = imageList[index];
-            }
-            else if (e.Direction == SwipeDirection.Left)
+                else if (e.Direction == SwipeDirection.Left)
+                {
+                    if (questions[index].Answer == true)
+                    {
+                        correct++;
+                    }
+                    else
+                    {
+                        wrong++;
+                    }
+                }
+            }            
+
+            if (index >= questions.Count - 1)
             {
-                if (index <= 0)
-                {
-                    index = strList.Count;
-                }
-                theLabel.Text = strList[--index];
-                theImage.Source = imageList[index];
+                theLabel.Text = "You Answered: " + correct + " correct" + " / Wrong: " + wrong;
+                theImage.Source = "finished.png";
+                //this is for the if check on line 47
+                index++;
             }
+            else
+            {
+                theLabel.Text = questions[index].Title;
+                theImage.Source = questions[index].Image;
+                index++;
+            }
+
+
         }
 
     }
